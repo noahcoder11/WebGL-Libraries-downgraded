@@ -1,5 +1,5 @@
 var gl = {
-    canvas: doc[["createElement"]]("canvas"),
+    canvas: docuemtn.createElement("canvas"),
     getContext: function(){
         this.ctx = this.canvas.getContext("webgl");
     },
@@ -68,7 +68,7 @@ var gl = {
     },
 
     loadImageData: function(image) {
-        var c = doc[["createElement"]]('canvas');
+        var c = document.createElement('canvas');
         var ctx = c.getContext('2d');
         c.width = image.width;
         c.height = image.height;
@@ -82,26 +82,13 @@ var gl = {
         this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, width, height, 0, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, data);
     },
 
-    loadTexture: function(dataOrURL, width, height) {
+    loadTexture: function(data, width, height) {
         try {
             var texture = this.ctx.createTexture();
             this.ctx.bindTexture(this.ctx.TEXTURE_2D, texture);
             this.ctx.pixelStorei(this.ctx.UNPACK_ALIGNMENT, 1);
             
-            if (width) {
-                this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, width, height, 0, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, dataOrURL);
-            } else {
-                var image = _.Image();
-                image.crossOrigin = "";
-                
-                image.onload = function() {
-                    this.ctx.bindTexture(this.ctx.TEXTURE_2D, texture);
-                    this.ctx.pixelStorei(this.ctx.UNPACK_FLIP_Y_WEBGL, true);
-                    this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGB, this.ctx.RGB, this.ctx.UNSIGNED_BYTE, image);
-                };
-                
-                image.src = dataOrURL;
-            }
+            this.ctx.texImage2D(this.ctx.TEXTURE_2D, 0, this.ctx.RGBA, width, height, 0, this.ctx.RGBA, this.ctx.UNSIGNED_BYTE, data);
             
             this.ctx.generateMipmap(this.ctx.TEXTURE_2D);
             this.ctx.texParameteri(this.ctx.TEXTURE_2D, this.ctx.TEXTURE_MIN_FILTER, this.ctx.NEAREST);
