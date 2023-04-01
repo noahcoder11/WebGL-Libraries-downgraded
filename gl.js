@@ -1,5 +1,5 @@
 var gl = {
-    canvas: docuemtn.createElement("canvas"),
+    canvas: document.createElement("canvas"),
     getContext: function(){
         this.ctx = this.canvas.getContext("webgl");
     },
